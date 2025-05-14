@@ -1,66 +1,63 @@
+gsap.registerPlugin(ScrollTrigger);
 
-gsap.registerPlugin(ScrollTrigger)
+// Hamburger Menu Toggle
+document.querySelector("#header .hamburger-menu").addEventListener("click", function () {
+    this.classList.toggle("active");
+    document.querySelector(".nav-links").classList.toggle("active");
+});
 
-
-const elements = ["#hero-section .animate span", "#work-section .animate span", "brand .animate span", "#footer .animate span"];
-
-elements.forEach((selector) =>{
+// Text Animations
+const elements = ["#hero-section .animate span", "#work-section .animate span", "#brand .animate span", "#footer .animate span"];
+elements.forEach((selector) => {
     gsap.from(selector, {
-        y:300,
-        rotation: 15,
-        duration: 4,
-        stagger: 0.1,
-        markers: true,
-        ease: "power4.out",
-        
-        scrollTrigger:{
+        y: 100,
+        opacity: 0,
+        duration: 1.5,
+        stagger: 0.2,
+        ease: "power3.out",
+        scrollTrigger: {
             trigger: selector,
-            start: "top 120%",
-            end: "bottom 90%",
+            start: "top 90%",
+            end: "bottom 80%",
             toggleActions: "play none none none",
-            // scrub: 4,
-        }
-    })
-})
+        },
+    });
+});
 
-// ---------------------------------------image animation-----------------------------------------------------------------------
+// Image Section Animation
 gsap.to("#image-section .overlay", {
     scrollTrigger: {
         trigger: "#image-section",
-        start: "top 90%",
-        end: "bottom bottom",
-        // markers: true,
+        start: "top 80%",
+        end: "bottom 60%",
         scrub: 1,
     },
-    width: "86vw",
-})
+    scale: 1.1,
+    borderRadius: "10px",
+});
 
-
-// ---------------------------------------cards animation-----------------------------------------------------------------------
-gsap.fromTo("#recent-project .grid .item", {
-    opacity: 0,
-    y: 100,
-}, {
-    opacity: 1,
-    y: 0,
-    duration: 1,
-    stagger: 0.2,
-    scrollTrigger:{
-        trigger: "#recent-project .grid",
-        start: "top 70%",
-        end: "bottom 70%",
-        scrub: 1,
+// Project Cards Animation
+gsap.fromTo(
+    "#recent-project .grid .item",
+    { opacity: 0, y: 50 },
+    {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        stagger: 0.3,
+        scrollTrigger: {
+            trigger: "#recent-project .grid",
+            start: "top 80%",
+            end: "bottom 60%",
+            scrub: 1,
+        },
     }
-})
+);
 
-// ---------------------------------------brand infinity-----------------------------------------------------------------------
-var infinity = document.querySelector(".logos-slide").cloneNode(true);
-document.querySelector(".logos").appendChild(infinity)
-
-// ---------------------------------------smooth scroll-----------------------------------------------------------------------
-
+// Smooth Scroll
 const lenis = new Lenis({
-    duration : 6,
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
 });
 
 function raf(time) {
